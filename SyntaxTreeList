@@ -1,0 +1,72 @@
+unit SyntaxTree;
+interface
+uses
+Lexer, GrammarSymbols;
+type
+	
+	TNodePointer = ^TreeNode;
+	
+	TreeNode = record
+		elem:GrammarSymbol;
+		children:NodeList;
+		end;
+	NodeList = record
+	
+procedure initTree(var t:TNodePointer; var root:GrammarSymbol);
+procedure getParent(var t:TNodePointer; var parent:TNodePointer);
+procedure getLeftChild(var t:TNodePointer; var lc:TNodePointer);
+procedure getRightBro(var t:TNodePointer; var rb:TNodePointer);
+procedure preorder(var t:TNodePointer);
+procedure addLeftChild(var t:TNodePointer; var newElem:GrammarSymbol);
+procedure addRightBro(var t:TNodePointer; var newElem:GrammarSymbol);
+
+implementation
+
+procedure initTree(var t:TNodePointer; var root:GrammarSymbol);
+begin
+	t^.elem := root;
+	t^.children := nil;
+end;
+
+
+procedure getParent(var t:TNodePointer; var parent:TNodePointer);
+begin
+	parent := t^.parent;
+end;
+procedure getLeftChild(var t:TNodePointer; var lc:TNodePointer);
+begin
+	lc := t^.leftChild;
+end;
+procedure getRightBro(var t:TNodePointer; var rb:TNodePointer);
+begin
+	rb := t^.rightBro;
+end;
+
+procedure addLeftChild(var t:TNodePointer; var newElem:GrammarSymbol);
+var aux : TNodePointer;
+begin
+	New(aux);
+	aux^.elem := newElem;
+	aux^.parent := t;
+	aux^.rightBro := t^.leftChild;
+	aux^.leftChild := nil;
+	t^.leftChild := aux;
+	
+end;
+procedure addRightBro(var t:TNodePointer; var newElem:GrammarSymbol);
+var aux : TNodePointer;
+begin
+	New(aux);
+	aux^.elem := newElem;
+	aux^.parent := t^.parent;
+	aux^.rightBro := t^.rightBro;
+	aux^.leftChild := nil;
+	t^.rightBro := aux;
+end;
+
+procedure preorder(var t:TNodePointer);
+begin
+	
+end;
+end.
+
